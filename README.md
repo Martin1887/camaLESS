@@ -64,8 +64,15 @@ To use camaLESS follow the following steps. For more examples view the examples 
 			};
 		</script>
 		<script src="js/less-2.7.1.min.js"></script>
+		<script type="text/javascript" src="js/camaLESS/camaLESS.js"></script>
+		<!-- JS where preset themes are defined and camaLessOpenDb is called -->
+		<script type="text/javascript" src="js/color_themes.js"></script>
+		<script type="text/javascript"
+			src="js/camaLESS/colorPicker/javascript_implementation/jsColorPicker.min.js">
+		</script>
+		<link href="js/camaLESS/camaLESS.css" rel="stylesheet" type="text/css">
 	
-2. Create your preset themes:
+2. Create your preset themes (for instance in color_themes.js):
 
 		var themes = [{name: 'ColorThemes', values: [
             {name: 'dark', shownName: 'dark',
