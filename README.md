@@ -1,7 +1,7 @@
 # camaLESS
 camaLESS is an open source library under Apache 2.0 license customizable color themes.
 
-An example of camaLESS application is RAEfox (https://github.com/Martin1887/RAEfox), a JS application that allows search definitions in castilian Wiktionary.
+An example of camaLESS application is RAEfox (https://github.com/Martin1887/RAEfox), a JS application that allows search definitions in castilian Wiktionary. Initially camaLESS has been developed inside RAEfox, so you can find previous commits in that repository.
 
 The color picker used in camaLESS has been developed by Peter Dematté and it can be found under MIT license in https://github.com/PitPik/colorPicker.
 
@@ -42,6 +42,16 @@ The structure of the indexedDB database is an array of stores where each store i
 			its style theme variables). This object has the following structure:
 			{'selector': 'CSS style', ...} where the special selector 'this' is used for the whole form
 	}
+where each theme (each element of values array) is as follows:
+
+	{
+		name: internal name of the theme,
+		shownName: translated name using l10n (optional), if it is not specified, name is displayed,
+		selected: boolean that says which theme is selected (1 or 0, only one theme selected),
+		order: order of the theme in the store,
+		values: object with variables and colors, variables must start by '@'
+	}
+
 
 ## Basic usage
 
@@ -89,6 +99,8 @@ To use camaLESS follow the following steps. For more examples view the examples 
 				'label': 'color: @foreground !important;', 'a': 'color: @links;',
 				'section header': 'color: @listsHeader; border-bottom-color: @listsHeader;'
 			}}];
+			
+	You can see that selected and order are not specified. In preset themes these fields must not be included. The first theme is the selected theme and the order is the order in the array.
 				
 3. Call openCamaLessDb with your options. For instance:
 
