@@ -59,7 +59,7 @@ To use camaLESS follow the following steps. For more examples view the examples 
 
 1. Initialize your LESS object and load less.js:
 
-
+		<link href="css/style.less" rel="stylesheet/less" type="text/css">
 		<script type="text/javascript">
 			less = {
 				env: 'production',
