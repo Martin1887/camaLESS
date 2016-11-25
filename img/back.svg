@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+	width="60px"
+	height="80px"
+   xmlns="http://www.w3.org/2000/svg">
+	<defs></defs>
+	<g>
+	    <polygon stroke="white" fill="white" stroke-width="1" points="
+			2 40,
+			52 78,
+			58 72,
+			14 40,
+			58 8,
+			52 2
+			2 40
+			 ">
+	    </polygon>
+	</g>
+</svg>
+
