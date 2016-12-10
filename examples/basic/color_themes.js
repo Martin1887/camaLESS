@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         '@links': '#0000BB'}}],
 		preview: {'this': 'background: @background; color: @foreground !important;',
 			'label': 'color: @foreground !important;', 'a': 'color: @links;',
-			'input:not(.color),.camaLessForm input[type="radio"] ~ span':
+			'input:not(.color),.camaLessForm input[type="radio"] ~ label,button':
 				'color: @foreground; background-color: @background; filter: brightness(0.8); border-color: @foreground;'}});
     
 
     var form = [document.getElementById('themes')];
 	
 	// Open DB and create form
-    openCamaLessDb('basicUsage_camaLESSdb', less, themesTypesNames, themes, form);
+    openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form);
 });

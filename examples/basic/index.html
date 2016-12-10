@@ -2,8 +2,9 @@
 
 <html>
 <head>
+    <title>camaLESS basic example</title>
     <meta charset="UTF-8">
-    <link href="../style.less" rel="stylesheet/less" type="text/css">
+    <link href="style.less" rel="stylesheet/less" type="text/css">
     <script type="text/javascript">
         less = {
             env: 'production',
@@ -15,10 +16,10 @@
             }
         };
     </script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js"></script>
+    <script src="../less-2.7.1.min.js"></script>
     <script type="text/javascript" src="../../camaLESS.js"></script>
     <!-- JS where preset themes are defined and camaLessOpenDb is called -->
-    <script type="text/javascript" src="../color_themes.js"></script>
+    <script type="text/javascript" src="color_themes.js"></script>
     <script type="text/javascript"
         src="../../colorPicker/javascript_implementation/jsColorPicker.min.js">
     </script>
@@ -34,7 +35,9 @@
         </p>
     </div>
 
-    <form id="themes"></form>
+    <div style="height: 500px; margin-top: 50px;">
+        <form id="themes"></form>
+    </div>
 
 </body>
 </html>

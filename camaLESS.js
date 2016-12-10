@@ -63,9 +63,13 @@ var camaLess = {
 	 */
 	themeName: '',
 	themesDifferentName: '',
-	almostOneTheme: ''
+	almostOneTheme: '',
+
+	path: document.currentScript.src
 
 };
+camaLess.path = camaLess.path.substring(0, camaLess.path.lastIndexOf('/'));
+
 
 if (navigator.mozL10n) {
 	navigator.mozL10n.ready(function() {
@@ -440,10 +444,11 @@ function createCamaLessForm(store, form, clas, dataType, callback) {
                     for (var j = 0; j < themes[currentStore].length; j++) {
                         var theme = themes[currentStore][j];
                         themesListHtml += '<tr data-theme-id="themesListTr' + currentStore + j + '">'
-									+ '<td><input type="radio" name="' + currentStore
+									+ '<td><input id="radio' + currentStore + j + '" type="radio" name="' + currentStore
                                     + '" ' + (theme.selected ? 'checked="checked"' : '')
                                     + ' onclick="applyPreview(\'' + currentStore + '\', false, '
-									+ 'this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);"><span></span></td>';
+									+ 'this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);">'
+									+ '<label for="radio' + currentStore + j + '"></label></td>';
                         themesListHtml += '<td class="themeName"><label '
                                 + (theme.shownName ?
                                 ' data-l10n-id="' + theme.shownName + '"'
@@ -453,13 +458,13 @@ function createCamaLessForm(store, form, clas, dataType, callback) {
 						themesListHtml += '<td><a class="iconLink" href="#" onclick="return editTheme'
                                     + '(this.parentNode.parentNode.getAttribute(\'data-theme-id\'), \''
                                     + currentStore + '\');"><img width="24" height="24"'
-                                    + ' src="js/camaLESS/img/edit.svg" alt="edit"></a>'
+                                    + ' src="' + camaLess.path + '/img/edit.svg" alt="edit"></a>'
                                     + '</td>';
 						
 						// 'x' button
                         themesListHtml += '<td><a class="iconLink" href="#" onclick="return eraseTheme'
                                     + '(this.parentNode.parentNode);"><img width="24" height="24"'
-                                    + ' src="js/camaLESS/img/erase_cross.png" alt="erase"></a>'
+                                    + ' src="' + camaLess.path + '/img/erase_cross.png" alt="erase"></a>'
                                     + '</td>';
 
                         themesListHtml += '</tr>';
@@ -495,7 +500,7 @@ function createCamaLessForm(store, form, clas, dataType, callback) {
                     themesListHtml += '<tr><td class="themeAdd" colspan="4"><a href="#" onclick='
                                         + '"return addTheme(this.parentNode.parentNode.parentNode, \''
                                         + currentStore + '\');"><img width="30" '
-                                        + 'height="30" src="js/camaLESS/img/add.png" alt="add">'
+                                        + 'height="30" src="' + camaLess.path + '/img/add.png" alt="add">'
 										+ '<span data-l10n-id="createTheme">Create theme</span></a>'
                                         + '</td></tr>';
 
@@ -514,19 +519,20 @@ function createCamaLessForm(store, form, clas, dataType, callback) {
 						
 						form.innerHTML += '<section class="camaLessFormEditPanel">'
 							+ '<div class="camaLessFormBackToList" onclick="backToThemesList(this.parentNode.parentNode);">'
-								+ '<img width="30" height="40" src="js/camaLESS/img/back.svg"/>'
+								+ '<img width="30" height="40" src="' + camaLess.path + '/img/back.svg"/>'
 							+ '</div>'
 							+ '<div class="camaLessFormFields">' + themesFieldsHtml
 							+ '</div></section>';
 												
 						var cancel = document.createElement('button');
 						cancel.attributes['data-l10n-id'] = 'cancel';
+						cancel.innerHTML = 'Cancel';
 						cancel.type = 'button';
 						cancel.dataset['l10nId'] = 'cancel';
 						cancel.onclick = cancelCamaLessForm(store, form, clas, dataType, callback);
 						form.innerHTML += '<menu>'
 										  + '<button class="recommend" type="submit" '
-										  + 'data-l10n-id="save"></button></menu>';
+										  + 'data-l10n-id="save">Save</button></menu>';
 						form.lastChild.insertBefore(cancel, form.lastChild.lastChild);
 
 						addToCamaLessForms(store, form, clas, dataType, callback);
@@ -586,23 +592,22 @@ function createCamaLessForm(store, form, clas, dataType, callback) {
 									}
 								}
 							});
-
-							// colorPicker in all inputs
-							jsColorPicker('input.color', {
-								customBG: '#222',
-								readOnly: false,
-								init: function (elm, colors) {
-									elm.style.backgroundColor = elm.value;
-									elm.style.color = colors.rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd';
-								}
-							});
-							// When write to change background color
-							var inputs = document.querySelectorAll('input.color');
-							for (var i = 0; i < inputs.length; i++) {
-								inputs[i].onkeyup = function() {
-									this.style.backgroundColor = this.value;
-								};
+						}
+						// colorPicker in all inputs
+						jsColorPicker('input.color', {
+							customBG: '#222',
+							readOnly: false,
+							init: function (elm, colors) {
+								elm.style.backgroundColor = elm.value;
+								elm.style.color = colors.rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd';
 							}
+						});
+						// When write to change background color
+						var inputs = document.querySelectorAll('input.color');
+						for (var i = 0; i < inputs.length; i++) {
+							inputs[i].onkeyup = function() {
+								this.style.backgroundColor = this.value;
+							};
 						}
 					}
                 }
@@ -639,9 +644,12 @@ function backToThemesList(form) {
 	
 	trEditing.className = trEditing.className.replace(' editing', '');
 	editPanel.className = editPanel.className.replace(' editing', ' backing');
+	var listPanel = form.querySelector('.camaLessFormListPanel');
+	listPanel.className = listPanel.className.replace(' editing', ' backing');
 	
 	setTimeout(function() {
 		editPanel.className = editPanel.className.replace(' backing', '');
+		listPanel.className = listPanel.className.replace(' backing', '');
 	}, 1000);
 	
 	// apply preview
@@ -660,7 +668,7 @@ function backToThemesList(form) {
  * @returns false in order to not follow link
  */
 function editTheme(themeTrDataThemeId, store) {
-    
+
 	var themeTr = document.querySelector('[data-theme-id="'
 			+ themeTrDataThemeId.replace('themesListTr', 'themesFieldsTr') + '"]');
     themeTr.className += " editing";
@@ -670,6 +678,9 @@ function editTheme(themeTrDataThemeId, store) {
 	editPanel.className += ' editing';
 	
 	var form = editPanel.parentNode;
+
+	var listPanel = form.querySelector('.camaLessFormListPanel');
+	listPanel.className += ' editing';
 	
 	// apply preview
 	applyPreview(store, true, form);
@@ -722,20 +733,20 @@ function addTheme(themeTypeTable, store) {
 	var form = themeTypeTable.parentNode.parentNode.parentNode;
 	var currentPreviewColors = getCurrentPreviewTheme(store, false, form);
 	var themes = form.querySelectorAll('tr[data-theme-id^="themesListTr' + store + '"]').length;
-	themesListHtml += '<td><input type="radio" name="' + store
+	themesListHtml += '<td><input id="radio' + store + themes + '" type="radio" name="' + store
 				+ '" onclick="applyPreview(\'' + store + '\', false, '
-				+ 'this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);"><span></span></td>';
+				+ 'this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);"><label for="radio' + store + themes + '"></label></td>';
 	themesListHtml += '<td class="themeName"><label data-l10n-id="newTheme">New theme</label></td>';
 	// edit button
 	themesListHtml += '<td><a href="#" onclick="return editTheme'
 				+ '(this.parentNode.parentNode.getAttribute(\'data-theme-id\'));"><img width="24" height="24"'
-				+ ' src="js/camaLESS/img/edit.svg" alt="edit"></a>'
+				+ ' src="' + camaLess.path + '/img/edit.svg" alt="edit"></a>'
 				+ '</td>';
 
 	// 'x' button
 	themesListHtml += '<td><a href="#" onclick="return eraseTheme'
 				+ '(this.parentNode.parentNode);"><img width="24" height="24"'
-				+ ' src="js/camaLESS/img/erase_cross.png" alt="erase"></a>'
+				+ ' src="' + camaLess.path + '/img/erase_cross.png" alt="erase"></a>'
 				+ '</td>';
 
 	var themesFieldsHtml = '<tr data-theme-id="themesFieldsTr' + store + themes + '">';
