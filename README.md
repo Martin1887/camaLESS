@@ -81,7 +81,9 @@ To use camaLESS follow the following steps. For more examples view the examples 
 			src="js/camaLESS/colorPicker/javascript_implementation/jsColorPicker.min.js">
 		</script>
 		<link href="js/camaLESS/camaLESS.css" rel="stylesheet" type="text/css">
-	
+
+	camaLESS.css is usually used, but for full screen forms or dialogs you may prefer camaLESS_absolute.css.
+
 2. Create your preset themes (for instance in color_themes.js):
 
 		var themes = [{name: 'ColorThemes', values: [
@@ -111,6 +113,25 @@ To use camaLESS follow the following steps. For more examples view the examples 
 
 ## Examples
 
-In the examples folder you can find full and working examples.
+In the examples folder you can find the following full and working examples:
+
+### Basic
+This is a basic example with common configuration where the themes form is inside a div in the body of the HTML.
+
+### Full screen
+This example shows the themes form in full screen when a button is clicked using camaLESS_absolute.css.
+
+### Read only
+A powerful feature of camaLESS is that users can customize and create their own themes, but having read only forms is as easy as hide the links inside the camaLESS form. This example does it.
+
+### jQueryDialog
+This example puts the themes form inside a jQuery dialog using camaLESS_absolute.css. As extra feature, it hides the form menu with save and cancel buttons and attachs these funcionalities to the modal dialog buttons.
+
+This is done attaching the submit event to the save button click event and calling the function returned by cancelCamaLessForm (with the correct arguments) when the cancel button is clicked.
+
+### 2 pages
+Although camaLESS is usually used in one page applications, it is also possible having a number of pages using the configuration created in one of them. This example does it with a main page and a settings page where the color themes form is loaded.
+
+This is done calling openCamaLessDb in all pages but with an empty array of forms in the pages where no forms have to be created.
 
 
