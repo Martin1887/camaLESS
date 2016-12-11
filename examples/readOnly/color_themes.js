@@ -30,5 +30,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Open DB and create form
-    openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
+    openCamaLessDb('ReadOnlyExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
 });

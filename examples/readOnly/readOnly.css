@@ -1,0 +1,12 @@
+.camaLessForm .camaLessFormListPanel tr td:nth-child(3) {
+	display: none;
+}
+.camaLessForm .camaLessFormListPanel tr td:last-child {
+	display: none;
+}
+.camaLessForm .camaLessFormListPanel a {
+	display: none !important;
+}
+.camaLessForm .camaLessFormListPanel .themeName {
+	width: 80% !important;
+}

@@ -673,14 +673,14 @@ function editTheme(themeTrDataThemeId, store) {
 			+ themeTrDataThemeId.replace('themesListTr', 'themesFieldsTr') + '"]');
     themeTr.className += " editing";
 	
-	// add class to section
 	var editPanel = themeTr.parentNode.parentNode.parentNode.parentNode;
-	editPanel.className += ' editing';
-	
 	var form = editPanel.parentNode;
 
 	var listPanel = form.querySelector('.camaLessFormListPanel');
 	listPanel.className += ' editing';
+
+	// add class to section
+	editPanel.className += ' editing';
 	
 	// apply preview
 	applyPreview(store, true, form);
@@ -738,13 +738,13 @@ function addTheme(themeTypeTable, store) {
 				+ 'this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);"><label for="radio' + store + themes + '"></label></td>';
 	themesListHtml += '<td class="themeName"><label data-l10n-id="newTheme">New theme</label></td>';
 	// edit button
-	themesListHtml += '<td><a href="#" onclick="return editTheme'
+	themesListHtml += '<td><a href="#" class="iconLink" onclick="return editTheme'
 				+ '(this.parentNode.parentNode.getAttribute(\'data-theme-id\'));"><img width="24" height="24"'
 				+ ' src="' + camaLess.path + '/img/edit.svg" alt="edit"></a>'
 				+ '</td>';
 
 	// 'x' button
-	themesListHtml += '<td><a href="#" onclick="return eraseTheme'
+	themesListHtml += '<td><a href="#" class="iconLink" onclick="return eraseTheme'
 				+ '(this.parentNode.parentNode);"><img width="24" height="24"'
 				+ ' src="' + camaLess.path + '/img/erase_cross.png" alt="erase"></a>'
 				+ '</td>';

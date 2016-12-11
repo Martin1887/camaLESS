@@ -22,13 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var form = [document.getElementById('themes')];
 	
-	var almostOne = function() {
+    var almostOne = function() {
         alert('At least one theme must exist.');
     }
     var sameName = function(name) {
         alert('There are two or more themes with the same name: "' + name + '". Themes must have different names.');
     }
+
+    var callbacks = [
+        closeDialog
+    ];
     
     // Open DB and create form
-    openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
+    openCamaLessDb('jQueryDialogExample_camaLESSdb', less, themesTypesNames, themes, form, callbacks, null, null, null, almostOne, sameName);
 });

@@ -19,8 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			'input:not(.color),.camaLessForm input[type="radio"] ~ label,button':
 				'color: @foreground; background-color: @background; filter: brightness(0.8); border-color: @foreground;'}});
     
-
-    var form = [document.getElementById('themes')];
 	
 	var almostOne = function() {
         alert('At least one theme must exist.');
@@ -30,5 +28,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Open DB and create form
-    openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
+    openCamaLessDb('2PagesExample_camaLESSdb', less, themesTypesNames, themes, [], null, null, null, null, almostOne, sameName);
 });
