@@ -54,7 +54,7 @@ initCamaLess(config) where config object has the following properties (optional 
 
 - [almostOneThemeCB]: Optional callback fired when the user try to save a form without themes. By default an alert with the 'almostOneTheme' l10n tag is used.
 
-- [sameNameThemesCB]: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l100n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
+- [sameNameThemesCB]: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l10n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
 
 
 
@@ -80,7 +80,7 @@ openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, forms
 
 - almostOneThemeCB: Optional callback fired when the user try to save a form without themes. By default an alert with the 'almostOneTheme' l10n tag is used.
 
-- sameNameThemesCB: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l100n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
+- sameNameThemesCB: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l10n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
 
 The structure of the indexedDB database is an array of stores where each store is as follows:
 
