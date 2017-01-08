@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('There are two or more themes with the same name: "' + name + '". Themes must have different names.');
     }
     
-    // Open DB and create form
-    openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
+    // Open DB and create form (the following calls are equivalent)
+    //openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
+    initCamaLess({
+        dbName: 'BasicExample_camaLESSdb',
+        less: less,
+        types: themesTypesNames,
+        presets: themes,
+        forms: form,
+        almostOneThemeCB: almostOne,
+        sameNameThemesCB: sameName
+    });
 });

@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
         closeDialog
     ];
     
-    // Open DB and create form
-    openCamaLessDb('jQueryDialogExample_camaLESSdb', less, themesTypesNames, themes, form, callbacks, null, null, null, almostOne, sameName);
+    // Open DB and create form (the following calls are equivalent)
+    //openCamaLessDb('jQueryDialogExample_camaLESSdb', less, themesTypesNames, themes, form, callbacks, null, null, null, almostOne, sameName);
+    initCamaLess({
+        dbName: 'jQueryDialogExample_camaLESSdb',
+        less: less,
+        types: themesTypesNames,
+        presets: themes,
+        forms: form,
+        callbacks: callbacks,
+        almostOneThemeCB: almostOne,
+        sameNameThemesCB: sameName
+    });
 });
