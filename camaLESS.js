@@ -810,6 +810,12 @@ function backToThemesList(form) {
 	var listPanel = form.querySelector('.camaLessFormListPanel');
 	listPanel.className = listPanel.className.replace(' editing', ' backing');
 
+	var listPanelTrEditing = listPanel.querySelector('[data-theme-id="'
+		+ trEditing.getAttribute('data-theme-id').replace('themesFieldsTr', 'themesListTr') + '"]');
+	var currentNameValue = trEditing.querySelector('.themeName input').value;
+	listPanelTrEditing.querySelector('.themeName label').innerHTML = currentNameValue;
+	trEditing.querySelector('.themeName input').setAttribute('value', currentNameValue);
+
 	setTimeout(function() {
 		editPanel.className = editPanel.className.replace(' backing', '');
 		listPanel.className = listPanel.className.replace(' backing', '');
