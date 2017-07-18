@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>camaLESS quick panel example</title>
+    <meta charset="UTF-8">
+    <link href="style.less" rel="stylesheet/less" type="text/css">
+    <script type="text/javascript">
+        less = {
+            env: 'production',
+            async: false,
+            globalVars: {
+                background: '#151515',
+                foreground: '#BBB',
+                links: '#8AF'
+            }
+        };
+    </script>
+    <script src="../less-2.7.1.min.js"></script>
+    <script type="text/javascript" src="../../camaLESS.js"></script>
+    <!-- JS where preset themes are defined and camaLessOpenDb is called -->
+    <script type="text/javascript" src="color_themes.js"></script>
+    <script type="text/javascript"
+        src="../../colorPicker/javascript_implementation/jsColorPicker.min.js">
+    </script>
+    <link href="../../camaLESS.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <div id="quickPanel"></div>
+
+    <div>
+        <h1>camaLESS quick panel example</h1>
+        <p>
+            Lorem ipsum placerat commodo volutpat primis porttitor facilisis odio aptent iaculis consequat tincidunt class senectus, sociosqu auctor lacus erat congue non proin bibendum condimentum suspendisse curabitur vehicula mauris vitae viverra sollicitudin commodo torquent justo iaculis, urna quis id cubilia viverra placerat hac habitasse, ultrices posuere convallis pellentesque augue magna eros semper aliquet phasellus litora sollicitudin egestas pulvinar, molestie orci leo luctus vulputate curabitur interdum elit, maecenas quis lacinia erat egestas litora odio ornare vehicula magna orci luctus purus suspendisse aenean, augue vestibulum aptent euismod sodales augue semper mattis, hendrerit vulputate lorem ultrices quam leo potenti curabitur cursus luctus blandit sapien.
+        </p>
+    </div>
+
+    <div style="height: 500px; margin-top: 50px;">
+        <form id="themes"></form>
+    </div>
+
+</body>
+</html>

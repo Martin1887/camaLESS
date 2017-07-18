@@ -44,6 +44,7 @@
 	margin-right: 20px;
 	border: none !important;
 	height: 50px;
+	cursor: pointer;
 }
 .camaLessForm menu button.recommend {
 	background-color: #48a !important;
@@ -82,7 +83,7 @@
 	vertical-align: top;
 	line-height: 1rem;
 	height: 1rem;
-	
+
 }
 .camaLessForm input[type="radio"]:checked ~ label:after {
 	content: '·';
@@ -224,6 +225,114 @@
 .camaLessForm .camaLessFormEditPanel .camaLessFormFields td {
 	display: block;
 	margin: 10px 0;
+}
+
+/* quickPanel */
+.camaLess-quick-panel {
+	position: fixed;
+	top: 0;
+	left: calc(66.6% - 100px);
+	transform: translateX(50%);
+	max-width: 200px;
+	width: auto !important;
+	text-align: center;
+	border: 1px solid #fff;
+	border-top: none;
+	border-radius: 2px;
+	background-color: transparent;
+	overflow: hidden;
+}
+.camaLess-quick-panel-container {
+	list-style: none;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0 2%;
+	display: inline-block;
+	margin: 10px 0;
+	overflow-x: hidden;
+	white-space: nowrap;
+}
+.camaLess-quick-panel-container.scrolled {
+	width: 78%;
+}
+.camaLess-quick-panel-container li {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 19px;
+	height: 19px;
+	overflow: hidden;
+}
+.camaLess-quick-panel-theme {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	margin: 0 5px;
+	border-radius: 100px;
+	border-width: 2px;
+	border-style: solid;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 150%;
+	vertical-align: top;
+	line-height: 14px;
+	text-align: center;
+}
+.camaLess-quick-panel-button {
+	cursor: pointer;
+	padding: 0 2%;
+	display: inline-block;
+	width: 5%;
+	font-size: 80%;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.camaLess-quick-panel-button:hover {
+	filter: brightness(150%);
+	opacity: 0.8;
+}
+.camaLess-quick-panel-button:active {
+	filter: brightness(250%);
+	opacity: 0.6;
+}
+.camaLess-quick-panel-button.disabled,
+.camaLess-quick-panel-button.disabled:hover,
+.camaLess-quick-panel-button.disabled:active {
+	opacity: 0.4 !important;
+	filter: none !important;
+}
+.camaLess-quick-panel-separator {
+	display: inline-block;
+	margin: 0 5px;
+	height: 19px;
+	opacity: 0.4;
+	line-height: 19px;
+	vertical-align: top;
+}
+.camaLess-quick-panel-separator:before {
+	content: '|';
+}
+.camaLess-quick-panel-settings {
+	display: inline-block;
+	height: 19px;
+	font-weight: bold;
+	cursor: pointer;
+	line-height: 19px;
+	vertical-align: top;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.camaLess-quick-panel-settings:hover {
+	filter: brightness(150%);
+	opacity: 0.8;
+}
+.camaLess-quick-panel-settings:active {
+	filter: brightness(250%);
+	opacity: 0.6;
 }
 
 @keyframes fadeOut {
