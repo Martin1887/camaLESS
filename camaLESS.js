@@ -17,7 +17,9 @@
  * limitations under the License.
  *
  */
-
+/*
+ * Version 1.2
+ */
 
 var camaLess = {
 

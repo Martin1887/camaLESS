@@ -1,22 +1,9 @@
-# ChangeLog
-## Version 1.1: new initCamaLess function added to initialize camaLess.
-initCamaLess function has been added for better readability. The older openCamaLessDb function remains working but initCamaLess is recommended.
+# Version 1.2: intuitive qucickPanel added, new themes names bug fixed and minified versions of JS and CSS.
+In version 1.2 optionally an user-friendly quickPanel can be added to fastly change the selected theme. Additionally, a settings callback can be added (adding a settings icon at the end of the panel). This callback is really useful to show the camaLESS form, so no additional button neither link has to be added.
 
-This function has a config param instead many individual params. The function syntax is the following:
+If you want simplify the interface at maximum, you can maintain the form hidden and quickPanel without settings, so users can change theme but they cannot create new themes or modify existing themes.
 
-initCamaLess(config) where config object has the following properties (optional properties are between square brackets):
-
-- dbName: {string} Database name, it must be unique for your application.
-- less: {object} LESS object.
-- types: {array} Types of color themes in your application.
-- presets: {array} Preset themes in application (to write in database creation in the first time that the app is opened). The format is an array with name and values attributes where name is the store name and values is its themes.
-- [forms]: {array} Forms to be submitted. If null, undefined or empty array camaLess is initialized but without color themes forms (useful when you have a number of pages and color themes are editable only in one of them).
-- [callbacks]: {array} Callback for every form submission. Can be null.
-- [formsStores]: {array} Themes types for every form. Can be null. Useful if you have different style types, for instance a form for application themes and another one for menu themes.
-- [formsClasses]: {array} CSS class for every form. Can be null. Default value is 'camaLessForm' for every form.
-- [formsDataTypes]: {array} data-type property for every form section. Can be null. Default value is 'list' for every form.
-- [almostOneThemeCB]: {function} Optional callback for form without themes error. Default value is an alert with almostOneTheme l10n localized variable.
-- [sameNameThemesCB]: {function} Optional callback for form with a number of themes with the same name. Default value is an alert with themeName and themesDifferentName l10n localized variables.
+**Important remark**: preview has to exist and to have a 'this' (main) selector, so quickPanel themes background and border colors use background (or background-color if background does not exist) and color properties of 'this' preview selector respectively.
 
 
 
@@ -56,9 +43,13 @@ initCamaLess(config) where config object has the following properties (optional 
 
 - [sameNameThemesCB]: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l10n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
 
+- [quickPanel]: DOM object of a container in which insert themes in a concise manner. Can be null. Preview with 'this' specification has to be defined for quickPanel themes colors
+
+- [quickPanelSettingsAction]: Function executed when settings icon is clicked in quickPanel (usually open camaLess form). If null and quickPanel not null quickPanel is displayed without settings icon.
 
 
-openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, formsClasses, formsDataTypes, almostOneThemeCB, sameNameThemeCB) where:
+
+openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, formsClasses, formsDataTypes, almostOneThemeCB, sameNameThemeCB, quickPanel, quickPanelSettingsAction) where:
 
 - name: Database name, it must be unique for your application. A good practice is using the name of your application followed by '_camaLESSdb'.
 
@@ -82,13 +73,17 @@ openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, forms
 
 - sameNameThemesCB: Optional callback fired when the user try to save a form with a number of themes with the same name. It has as argument the name of the duplicated theme. By default an alert with the 'themeName' l10n tag concatenated with the name of the duplicated theme and the 'themesDifferentName' l10n tag is used.
 
+- quickPanel: Optional DOM object of a container in which insert themes in a concise manner. Can be null. Preview with 'this' specification has to be defined for quickPanel themes colors
+
+- quickPanelSettingsAction: Optional function executed when settings icon is clicked in quickPanel (usually open camaLess form). If null and quickPanel not null quickPanel is displayed without settings icon.
+
 The structure of the indexedDB database is an array of stores where each store is as follows:
 
 	{
 		name: The name of the type of theme,
 		values: An array with the existing themes,
 		preview: An optional object used to apply CSS to the form while the user select or edit a theme.
-			Without preview the style of the form never changes until save the form (if the form has its style theme variables). This object has the following structure:
+			Without preview the style of the form never changes until save the form (if the form has its style theme variables) and quickPanel themes have not the proper colors. This object has the following structure:
 			{'selector': 'CSS style', ...} where the special selector 'this' is used for the whole form
 	}
 where each theme (each element of values array) is as follows:
@@ -140,19 +135,19 @@ To use camaLESS follow the following steps. For more examples view the examples 
                 values: {'@background': '#151515', '@foreground': '#BBBBBB',
                         '@links': '#88AAFF', '@linksBackground': 'rgba(87, 187, 255, 0.2)',
                         '@listsHeader': '#FFAA15'}},
-            
+
             {name: 'light', shownName: 'light',
                 values: {'@background': '#E8E8E8', '@foreground': '#000000',
                         '@links': '#0000BB', '@linksBackground': 'rgba(0, 213, 255, 0.3)',
                         '@listsHeader': '#DD4E00'}}],
-						
+
 			preview: {'this': 'background: @background; color: @foreground !important;',
 				'label': 'color: @foreground !important;', 'a': 'color: @links;',
 				'section header': 'color: @listsHeader; border-bottom-color: @listsHeader;'
 			}}];
-			
+
 	You can see that selected and order are not specified. In preset themes these fields must not be included. The first theme is the selected theme and the order is the order in the array.
-				
+
 3. Call openCamaLessDb or initCamaLess with your options. For instance:
 
 		openCamaLessDb('miApp_camaLESSdb', less, ['colorThemes'], themes,
@@ -167,7 +162,7 @@ To use camaLESS follow the following steps. For more examples view the examples 
 	        presets: themes,
 	        forms: [document.getElementById('miForm']
 	    });
-	
+
 
 
 ## Examples
@@ -193,4 +188,11 @@ Although camaLESS is usually used in one page applications, it is also possible 
 
 This is done calling openCamaLessDb in all pages but with an empty array of forms in the pages where no forms have to be created.
 
+### quickPanel
+This example shows a simple example using the new quick panel.
 
+### quickPanelHiddenForm
+This example is similar to the previous one, but with the form hidden to show how an user can change themes without opening and even without knowing the existence of themes form
+
+### quickPanelSettings
+This example shows a bigger form (quick panel has horizontal scroll with buttons) with settings icon, which open camaLESS form in this case opening its jQuery Dialog container.
