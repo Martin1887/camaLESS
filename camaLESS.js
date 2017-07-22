@@ -67,8 +67,13 @@ var camaLess = {
 	themesDifferentName: '',
 	almostOneTheme: '',
 
-	path: document.currentScript.src
+	path: document.currentScript.src,
 
+	/**
+	 * false for using less, true for using CSS variables
+	 * @type boolean
+	 */
+	 cssVars: false
 };
 camaLess.path = camaLess.path.substring(0, camaLess.path.lastIndexOf('/'));
 
@@ -112,13 +117,14 @@ if (navigator.mozL10n) {
  *					Default value is an alert with almostOneTheme l10n localized variable.
  *		[sameNameThemesCB]: {function} Optional callback for form with a number of themes with the same name.
  *					Default value is an alert with themeName and themesDifferentName l10n localized variables.
+ *		[useCssVars]: {boolean} true for using CSS variables, otherwise for using less
  *
  * @returns true
  */
  function initCamaLess(config) {
  	return openCamaLessDb(config.dbName, config.less, config.types, config.presets,
  		config.forms ? config.forms : [], config.callbacks, config.formsStores, config.formsClasses,
- 		config.formsDataTypes, config.almostOneThemeCB, config.sameNameThemesCB, config.quickPanel, config.quickPanelSettingsAction);
+ 		config.formsDataTypes, config.almostOneThemeCB, config.sameNameThemesCB, config.quickPanel, config.quickPanelSettingsAction, config.useCssVars);
  }
 
 /**
@@ -144,13 +150,18 @@ if (navigator.mozL10n) {
  * @param {HTMLElement} quickPanel Optional DOM element in which insert quick panel with a concise manner for selecting themes. Preview with
  * 'this' specification has to be defined for quickPanel themes colors
  * @param {function} quickPanelSettingsAction Optional function called when settings icon of quickPanel is clicked. If null no icon is shown
+ * @param {boolean} useCssVars true for using CSS variables, otherwise for using less
  * @returns true
  */
 function openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores,
-                            formsClasses, formsDataTypes, almostOneThemeCB, sameNameThemesCB, quickPanel, quickPanelSettingsAction) {
+                            formsClasses, formsDataTypes, almostOneThemeCB, sameNameThemesCB,
+							quickPanel, quickPanelSettingsAction, useCssVars) {
     var openRequest = indexedDB.open(name, 1);
 	camaLess.less = less;
     camaLess.stores = types;
+	if (useCssVars) {
+		camaLess.useCssVars = true;
+	}
 	var newDatabase = false;
 
 	if (almostOneThemeCB) {
@@ -1348,7 +1359,17 @@ function applyCamaLessColorTheme() {
 
 				// modifyVars when all variables of all themes are in allVars
 				if (added === camaLess.stores.length) {
-					camaLess.less.modifyVars(allVars);
+					if (camaLess.useCssVars) {
+						var append = '<style>html {';
+						for (var attr in allVars) {
+							var variable = attr.replace('@', '--');
+							append += variable + ': ' + allVars[attr] + ';';
+						}
+						append += '}</style>';
+						document.querySelector('head').innerHTML += append;
+					} else {
+						camaLess.less.modifyVars(allVars);
+					}
 				}
 			}
 		};
