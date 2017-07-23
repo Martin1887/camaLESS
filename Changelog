@@ -1,15 +1,19 @@
+Version 2.0:
+--------------------------------------------------------
+- CSS variables support.
+
 Version 1.2:
 --------------------------------------------------------
--New and user-friendly quick panel with selectable themes and optional shortcut to settings (useful for open camaLess form).
--Form new themes name (just created themes with default name instead assigned name) bug fixed.
--Minified versions for camaLESS.js, camaLESS.css and camaLESS_absolute.css.
+- New and user-friendly quick panel with selectable themes and optional shortcut to settings (useful for open camaLess form).
+- Form new themes name (just created themes with default name instead assigned name) bug fixed.
+- Minified versions for camaLESS.js, camaLESS.css and camaLESS_absolute.css.
 
 
 Version 1.1:
 --------------------------------------------------------
--New more intuitive interface to initialize camaLess initCamaLess (more details in Readme).
+- New more intuitive interface to initialize camaLess initCamaLess (more details in Readme).
 
 
 Version 1.0:
 --------------------------------------------------------
--Initial version.
+- Initial version.

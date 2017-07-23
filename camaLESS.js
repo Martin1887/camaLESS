@@ -97,7 +97,7 @@ if (navigator.mozL10n) {
  * Initialize camaLess with a config object. This function is an alternative to openCamaLessDb function.
  * @param {object} config A config object with the following properties (optional properties are between square brackets):
  * 		dbName: {string} Database name, it must be unique for your application.
- *		less: {object} LESS object.
+ *		less: {object} LESS object. Optional if useCssVars.
  *		types: {array} Types of color themes in your application.
  *		presets: {array} Preset themes in application (to write in database creation in
  * 					the first time that the app is opened). The format is an array with name and
@@ -135,7 +135,7 @@ if (navigator.mozL10n) {
  * least a objectStore name (each objectStore is a different type of color
  * theme).
  * @param {string} name Database name, it must be unique for your application.
- * @param {object} less LESS object.
+ * @param {object} less LESS object. Optional if useCssVars.
  * @param {array} types Types of color themes in your application.
  * @param {array} defaults Default themes in application (to write in database creation in
  * the first time that the app is opened). The format is an array with name and

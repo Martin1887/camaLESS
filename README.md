@@ -1,10 +1,29 @@
-# Version 1.2: intuitive qucickPanel added, new themes names bug fixed and minified versions of JS and CSS.
-In version 1.2 optionally an user-friendly quickPanel can be added to fastly change the selected theme. Additionally, a settings callback can be added (adding a settings icon at the end of the panel). This callback is really useful to show the camaLESS form, so no additional button neither link has to be added.
+# Version 2.0: CSS variables support.
+In version 2.0 optionally CSS variables can be used instead LESS. This is convenient for using lower resources taking advantage of newer browsers capabilities. Version 2.0 doesn't break anything and it is fully compatible with 1.x versions, major version has changed because CSS variables support is a high level improvement.
 
-If you want simplify the interface at maximum, you can maintain the form hidden and quickPanel without settings, so users can change theme but they cannot create new themes or modify existing themes.
+However, not all browsers -cough- Internet Explorer -cough- support CSS variables (full list of brosers compatibility in http://caniuse.com/#feat=css-variables). Therefore, the following check is recommended for using CSS variables if browser supports them and LESS otherwise:
 
-**Important remark**: preview has to exist and to have a 'this' (main) selector, so quickPanel themes background and border colors use background (or background-color if background does not exist) and color properties of 'this' preview selector respectively.
+	if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
+	    document.querySelector('head').innerHTML += '\
+	        <link href="{CSS_stylesheet}" rel="stylesheet" type="text/css">\
+	    ';
+	} else {
+	    document.querySelector('head').innerHTML += '\
+	        <link href="{LESS_stylesheet}" rel="stylesheet/less" type="text/css">\
+	        <script type="text/javascript">\
+	            less = {\
+	                env: \'production\',\
+	                async: false,\
+	                globalVars: {\
+	                    {custom_LESS_variables}\
+	                }\
+	            };\
+	        </script>\
+	        <script src="{LESS.js_library_path}"></script>\
+	    ';
+	}
 
+A full example using CSS variables and this check is available in examples folder.
 
 
 # camaLESS
@@ -23,7 +42,7 @@ initCamaLess(config) where config object has the following properties (optional 
 
 - dbName: Database name, it must be unique for your application A good practice is using the name of your application followed by '_camaLESSdb'.
 
-- less: LESS object. You must import and declare less.js before calling this function.
+- less: LESS object. You must import and declare less.js before calling this function. Optional if useCssVars.
 
 - types: Array of strings. Types of color themes in your application. You can have more than one theme type, for instance, you may have a theme for the main content, another theme for the menu, another theme for reader and another theme for dialogs.
 
@@ -47,13 +66,15 @@ initCamaLess(config) where config object has the following properties (optional 
 
 - [quickPanelSettingsAction]: Function executed when settings icon is clicked in quickPanel (usually open camaLess form). If null and quickPanel not null quickPanel is displayed without settings icon.
 
+- [useCssVars]: Boolean indicating if CSS vars are used instead LESS.
+
 
 
 openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, formsClasses, formsDataTypes, almostOneThemeCB, sameNameThemeCB, quickPanel, quickPanelSettingsAction) where:
 
 - name: Database name, it must be unique for your application. A good practice is using the name of your application followed by '_camaLESSdb'.
 
-- less: LESS object. You must import and declare less.js before calling this function.
+- less: LESS object. You must import and declare less.js before calling this function. Optional if useCssVars.
 
 - types: Array of strings. Types of color themes in your application. You can have more than one theme type, for instance, you may have a theme for the main content, another theme for the menu, another theme for reader and another theme for dialogs.
 
@@ -76,6 +97,8 @@ openCamaLessDb(name, less, types, defaults, forms, callbacks, formsStores, forms
 - quickPanel: Optional DOM object of a container in which insert themes in a concise manner. Can be null. Preview with 'this' specification has to be defined for quickPanel themes colors
 
 - quickPanelSettingsAction: Optional function executed when settings icon is clicked in quickPanel (usually open camaLess form). If null and quickPanel not null quickPanel is displayed without settings icon.
+
+- useCssVars: Boolean indicating if CSS vars are used instead LESS.
 
 The structure of the indexedDB database is an array of stores where each store is as follows:
 
@@ -101,7 +124,9 @@ where each theme (each element of values array) is as follows:
 
 To use camaLESS follow the following steps. For more examples view the examples folder.
 
-1. Initialize your LESS object and load less.js:
+1. Initialize your LESS object and load less.js or load CSS variables:
+
+	Classic mode, always using LESS.
 
 		<link href="css/style.less" rel="stylesheet/less" type="text/css">
 		<script type="text/javascript">
@@ -118,13 +143,48 @@ To use camaLESS follow the following steps. For more examples view the examples 
 			};
 		</script>
 		<script src="js/less-2.7.1.min.js"></script>
-		<script type="text/javascript" src="js/camaLESS/camaLESS.js"></script>
+		<script type="text/javascript" src="js/camaLESS/camaLESS.min.js"></script>
 		<!-- JS where preset themes are defined and camaLessOpenDb is called -->
 		<script type="text/javascript" src="js/color_themes.js"></script>
 		<script type="text/javascript"
 			src="js/camaLESS/colorPicker/javascript_implementation/jsColorPicker.min.js">
 		</script>
-		<link href="js/camaLESS/camaLESS.css" rel="stylesheet" type="text/css">
+		<link href="js/camaLESS/camaLESS.min.css" rel="stylesheet" type="text/css">
+
+	New in 2.0: check if CSS variables are supported and then using them, otherwise using LESS.
+
+		<script>
+			if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
+				document.querySelector('head').innerHTML += '\
+					<link href="css/style.css" rel="stylesheet" type="text/css">\
+				';
+			} else {
+				document.querySelector('head').innerHTML += '\
+					<link href="css/style.less" rel="stylesheet/less" type="text/css">\
+					<script type="text/javascript">\
+						less = {\
+							env: \'production\',\
+							async: false,\
+							globalVars: {\
+								background: \'#151515\',\
+								foreground: \'#BBB\',\
+								links: \'#8AF\',\
+								linksBackground: \'rgba(87, 187, 255, 0.2)\',\
+								listsHeader: \'#FFAA15\'\
+							}\
+						};\
+					</script>\
+					<script src="js/less-2.7.1.min.js"></script>\
+				';
+			}
+		</script>
+		<script type="text/javascript" src="js/camaLESS/camaLESS.min.js"></script>
+		<!-- JS where preset themes are defined and camaLessOpenDb is called -->
+		<script type="text/javascript" src="js/color_themes.js"></script>
+		<script type="text/javascript"
+			src="js/camaLESS/colorPicker/javascript_implementation/jsColorPicker.min.js">
+		</script>
+		<link href="js/camaLESS/camaLESS.min.css" rel="stylesheet" type="text/css">
 
 	camaLESS.css is usually used, but for full screen forms or dialogs you may prefer camaLESS_absolute.css.
 
@@ -146,7 +206,7 @@ To use camaLESS follow the following steps. For more examples view the examples 
 				'section header': 'color: @listsHeader; border-bottom-color: @listsHeader;'
 			}}];
 
-	You can see that selected and order are not specified. In preset themes these fields must not be included. The first theme is the selected theme and the order is the order in the array.
+	You can see that selected and order are not specified. In preset themes these fields must not be included. The first theme is the selected theme and the order is the order in the array. Note that **using CSS variables  variable names also begin with '@'**, camaLESS is in charge of replacing '@' by '--' when it applies themes.
 
 3. Call openCamaLessDb or initCamaLess with your options. For instance:
 
@@ -196,3 +256,6 @@ This example is similar to the previous one, but with the form hidden to show ho
 
 ### quickPanelSettings
 This example shows a bigger form (quick panel has horizontal scroll with buttons) with settings icon, which open camaLESS form in this case opening its jQuery Dialog container.
+
+### cssVars
+This example shows a full example similar to quickPanelSettings but using CSS variables instead LESS when it is possible (checking and stylesheet loading is done in color_themes.js).

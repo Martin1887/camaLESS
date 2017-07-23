@@ -1,3 +1,26 @@
+if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
+    document.querySelector('head').innerHTML += '\
+        <link href="style.css" rel="stylesheet" type="text/css">\
+    ';
+} else {
+    document.querySelector('head').innerHTML += '\
+        <link href="style.less" rel="stylesheet/less" type="text/css">\
+        <script type="text/javascript">\
+            less = {\
+                env: \'production\',\
+                async: false,\
+                globalVars: {\
+                    background: \'#151515\',\
+                    foreground: \'#BBB\',\
+                    links: \'#8AF\'\
+                }\
+            };\
+        </script>\
+        <script src="../less-2.7.1.min.js"></script>\
+    ';
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     var themesTypesNames = [];
