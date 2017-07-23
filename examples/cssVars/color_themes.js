@@ -1,23 +1,31 @@
+var useCssVars = false;
 if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
-    document.querySelector('head').innerHTML += '\
-        <link href="style.css" rel="stylesheet" type="text/css">\
-    ';
+    useCssVars = true;
+	var link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = 'style.css';
+	document.getElementsByTagName('head')[0].appendChild(link);
 } else {
-    document.querySelector('head').innerHTML += '\
-        <link href="style.less" rel="stylesheet/less" type="text/css">\
-        <script type="text/javascript">\
-            less = {\
-                env: \'production\',\
-                async: false,\
-                globalVars: {\
-                    background: \'#151515\',\
-                    foreground: \'#BBB\',\
-                    links: \'#8AF\'\
-                }\
-            };\
-        </script>\
-        <script src="../less-2.7.1.min.js"></script>\
-    ';
+    less = {
+		env: 'production',
+		async: false,
+		globalVars: {
+			background: '#151515',
+			foreground: '#BBB',
+			links: '#8AF'
+		}
+	};
+	var link = document.createElement('link');
+	link.rel = 'stylesheet/less';
+	link.type = 'text/css';
+	link.href = 'style.less';
+	document.getElementsByTagName('head')[0].appendChild(link);
+
+	var script = document.createElement('script');
+	script.src = '../less-2.7.1.min.js';
+	script.type = 'text/javascript';
+	document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 
@@ -83,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //openCamaLessDb('BasicExample_camaLESSdb', less, themesTypesNames, themes, form, null, null, null, null, almostOne, sameName);
     initCamaLess({
         dbName: 'CSSVarsExample_camaLESSdb',
-        less: null,
+        less: less,
         types: themesTypesNames,
         presets: themes,
         forms: form,
@@ -92,6 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
         sameNameThemesCB: sameName,
         quickPanel: quickPanel,
         quickPanelSettingsAction: quickPanelSettingsAction,
-        useCssVars: true
+        useCssVars: useCssVars
     });
 });

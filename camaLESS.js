@@ -18,7 +18,7 @@
  *
  */
 /*
- * Version 1.2
+ * Version 2.0
  */
 
 var camaLess = {
@@ -67,14 +67,18 @@ var camaLess = {
 	themesDifferentName: '',
 	almostOneTheme: '',
 
-	path: document.currentScript.src,
-
 	/**
 	 * false for using less, true for using CSS variables
 	 * @type boolean
 	 */
 	 cssVars: false
 };
+if (document.currentScript) {
+	camaLess.path = document.currentScript.src;
+} else {
+	var scripts = document.getElementsByTagName("script");
+	camaLess.path = scripts[scripts.length - 1].src;
+}
 camaLess.path = camaLess.path.substring(0, camaLess.path.lastIndexOf('/'));
 
 
@@ -487,7 +491,7 @@ function createCamaLessForm(store, form, clas, dataType, callback, quickPanel, q
         };
 
         transactions[formStores[i]].oncomplete = function(event) {
-            var currentStore = event.target.objectStoreNames[0];
+            var currentStore = event.target.db.objectStoreNames[0];
 
             // Write form only when previous stores have finished
             var interForm = setInterval(function() {
@@ -640,17 +644,22 @@ function createCamaLessForm(store, form, clas, dataType, callback, quickPanel, q
 									}
 
 									if (quickPanelSettingsAction) {
-										quickPanel.querySelector('.camaLess-quick-panel-settings').onclick = quickPanelSettingsAction;
+										quickPanel.querySelector('.camaLess-quick-panel-settings').onclick =
+											quickPanelSettingsAction;
 									}
 
 									// bind event onclick to themes
 									var themes = quickPanel.querySelectorAll('.camaLess-quick-panel-theme');
+									if (!themes.forEach) {
+										NodeList.prototype.forEach = Array.prototype.forEach;
+									}
 									themes.forEach(function(theme) {
 										theme.onclick = function() {
 											selectColorTheme(theme.getAttribute('data-theme'), theme.getAttribute('data-store'),
 												function() {
 													applyCamaLessColorTheme();
-													createCamaLessForm(store, form, clas, dataType, callback, quickPanel, quickPanelSettingsAction);
+													createCamaLessForm(store, form, clas, dataType, callback,
+														quickPanel, quickPanelSettingsAction);
 												}
 											);
 										};

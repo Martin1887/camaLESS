@@ -1,26 +1,34 @@
-# Version 2.0: CSS variables support.
+# Version 2.0: CSS variables support
 In version 2.0 optionally CSS variables can be used instead LESS. This is convenient for using lower resources taking advantage of newer browsers capabilities. Version 2.0 doesn't break anything and it is fully compatible with 1.x versions, major version has changed because CSS variables support is a high level improvement.
 
 However, not all browsers -cough- Internet Explorer -cough- support CSS variables (full list of brosers compatibility in http://caniuse.com/#feat=css-variables). Therefore, the following check is recommended for using CSS variables if browser supports them and LESS otherwise:
 
+	var useCssVars = false;
 	if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
-	    document.querySelector('head').innerHTML += '\
-	        <link href="{CSS_stylesheet}" rel="stylesheet" type="text/css">\
-	    ';
+		useCssVars = true;
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = '{css_style_path}';
+		document.getElementsByTagName('head')[0].appendChild(link);
 	} else {
-	    document.querySelector('head').innerHTML += '\
-	        <link href="{LESS_stylesheet}" rel="stylesheet/less" type="text/css">\
-	        <script type="text/javascript">\
-	            less = {\
-	                env: \'production\',\
-	                async: false,\
-	                globalVars: {\
-	                    {custom_LESS_variables}\
-	                }\
-	            };\
-	        </script>\
-	        <script src="{LESS.js_library_path}"></script>\
-	    ';
+		less = {
+			env: 'production',
+			async: false,
+			globalVars: {
+				{custom_LESS_variables}
+			}
+		};
+		var link = document.createElement('link');
+		link.rel = 'stylesheet/less';
+		link.type = 'text/css';
+		link.href = '{less_style_path}';
+		document.getElementsByTagName('head')[0].appendChild(link);
+
+		var script = document.createElement('script');
+		script.src = '{less.js_path}';
+		script.type = 'text/javascript';
+		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 
 A full example using CSS variables and this check is available in examples folder.
@@ -28,6 +36,8 @@ A full example using CSS variables and this check is available in examples folde
 
 # camaLESS
 camaLESS is an open source library under Apache 2.0 license customizable color themes.
+
+camaLESS has been tested on Firefox, Chrome, Internet Explorer and Edge. Nevertheless, it should work on all browsers since it has been coded following browsers compatibility rules. Please report an issue if it does not work properly on any browser.
 
 An example of camaLESS application is RAEfox (https://github.com/Martin1887/RAEfox), a JS application that allows search definitions in castilian Wiktionary. Initially camaLESS has been developed inside RAEfox, so you can find previous commits in that repository.
 
@@ -154,28 +164,36 @@ To use camaLESS follow the following steps. For more examples view the examples 
 	New in 2.0: check if CSS variables are supported and then using them, otherwise using LESS.
 
 		<script>
+			var useCssVars = false;
 			if (window.CSS && window.CSS.supports && window.CSS.supports('--test-var', 0)) {
-				document.querySelector('head').innerHTML += '\
-					<link href="css/style.css" rel="stylesheet" type="text/css">\
-				';
+				useCssVars = true;
+				var link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'style.css';
+				document.getElementsByTagName('head')[0].appendChild(link);
 			} else {
-				document.querySelector('head').innerHTML += '\
-					<link href="css/style.less" rel="stylesheet/less" type="text/css">\
-					<script type="text/javascript">\
-						less = {\
-							env: \'production\',\
-							async: false,\
-							globalVars: {\
-								background: \'#151515\',\
-								foreground: \'#BBB\',\
-								links: \'#8AF\',\
-								linksBackground: \'rgba(87, 187, 255, 0.2)\',\
-								listsHeader: \'#FFAA15\'\
-							}\
-						};\
-					</script>\
-					<script src="js/less-2.7.1.min.js"></script>\
-				';
+				less = {
+					env: 'production',
+					async: false,
+					globalVars: {
+						background: '#151515',
+						foreground: '#BBB',
+						links: '#8AF',
+						linksBackground: 'rgba(87, 187, 255, 0.2)',
+						listsHeader: '#FFAA15'
+					}
+				};
+				var link = document.createElement('link');
+				link.rel = 'stylesheet/less';
+				link.type = 'text/css';
+				link.href = 'style.less';
+				document.getElementsByTagName('head')[0].appendChild(link);
+
+				var script = document.createElement('script');
+				script.src = '{less.js_path}';
+				script.type = 'text/javascript';
+				document.getElementsByTagName('head')[0].appendChild(script);
 			}
 		</script>
 		<script type="text/javascript" src="js/camaLESS/camaLESS.min.js"></script>
