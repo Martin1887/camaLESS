@@ -1,5 +1,5 @@
 /*
- * camaLESS version 2.1
+ * camaLESS version 2.1.1
  */
 @font-face {
     font-family: 'Fira Sans';
@@ -266,6 +266,8 @@
 	border-radius: 2px;
 	background-color: transparent;
 	overflow: hidden;
+    z-index: 200;
+    font-family: "Fira Sans";
 }
 .camaLess-quick-panel-container {
 	list-style: none;
@@ -308,7 +310,7 @@
 	padding: 0 2%;
 	display: inline-block;
 	width: 5%;
-	font-size: 80%;
+	font-size: 115%;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
@@ -342,6 +344,7 @@
 .camaLess-quick-panel-settings {
 	display: inline-block;
 	height: 19px;
+    margin-right: 5px;
 	font-weight: bold;
 	cursor: pointer;
 	line-height: 19px;

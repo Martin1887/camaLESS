@@ -18,7 +18,7 @@
  *
  */
 /*
- * Version 2.1
+ * Version 2.1.1
  */
 
 var camaLess = {
@@ -636,10 +636,10 @@ function createCamaLessForm(store, form, clas, dataType, callback, quickPanel, q
 											> quickPanel.clientWidth) {
 										quickPanel.innerHTML = '<span onclick="quickPanelScroll'
 											+ '(this.parentNode.querySelector(\'.camaLess-quick-panel-container\'), true)" '
-											+ 'class="camaLess-quick-panel-button disabled">&#x25C0;</span>'
+											+ 'class="camaLess-quick-panel-button disabled">&#x25C2;</span>'
 											+ quickPanel.innerHTML + '<span onclick="quickPanelScroll'
 											+ '(this.parentNode.querySelector(\'.camaLess-quick-panel-container\'), false)" '
-											+ 'class="camaLess-quick-panel-button">&#x25B6;</span>';
+											+ 'class="camaLess-quick-panel-button">&#x25B8;</span>';
 										quickPanel.querySelector('.camaLess-quick-panel-container').className += ' scrolled';
 									}
 
