@@ -175,7 +175,7 @@
 	padding: .5em;
 }
 .cp-app {
-	z-index: 200;
+	z-index: 1600;
 }
 
 .camaLessForm .camaLessFormListPanel tr {
@@ -309,6 +309,7 @@
 	cursor: pointer;
 	padding: 0 2%;
 	display: inline-block;
+    vertical-align: middle;
 	width: 5%;
 	font-size: 115%;
 	-moz-user-select: none;

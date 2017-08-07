@@ -1,4 +1,4 @@
-# Version 2.1.1 already available!
+# Version 2.1.2 already available!
 
 # Version 2.0: CSS variables support
 In version 2.0 optionally CSS variables can be used instead LESS. This is convenient for using lower resources taking advantage of newer browsers capabilities. Version 2.0 doesn't break anything and it is fully compatible with 1.x versions, major version has changed because CSS variables support is a high level improvement.
